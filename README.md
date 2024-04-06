@@ -13,7 +13,11 @@ kubectl apply -f k8s/nginx/nginx.yaml
 
 # Helm - Repos
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add strimzi https://strimzi.io/charts
 helm repo update
 
 # Prometheus
 helm upgrade --install kube-prometheus-stack prometheus-community/kube-prometheus-stack --values k8s/prometheus/operator.yaml --version 57.2.0 --namespace monitoring --create-namespace
+
+# Strimzi
+helm upgrade --install strimzi-operator strimzi/strimzi-kafka-operator --values k8s/strimzi/operator.yaml --version 0.40.0 --namespace strimzi --create-namespace
