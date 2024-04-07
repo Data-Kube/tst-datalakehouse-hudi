@@ -21,3 +21,4 @@ helm upgrade --install kube-prometheus-stack prometheus-community/kube-prometheu
 
 # Strimzi
 helm upgrade --install strimzi-operator strimzi/strimzi-kafka-operator --values k8s/strimzi/operator.yaml --version 0.40.0 --namespace strimzi --create-namespace
+kubectl apply -f k8s/strimzi/kafka/kafka.yaml
