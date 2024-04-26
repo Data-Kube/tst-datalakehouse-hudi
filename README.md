@@ -15,6 +15,7 @@ kubectl apply -f k8s/nginx/nginx.yaml
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo add strimzi https://strimzi.io/charts
 helm repo add minio-operator https://operator.min.io
+helm repo add cloudnative-pg https://cloudnative-pg.io/charts/
 helm repo update
 
 # Prometheus
@@ -27,3 +28,7 @@ kubectl apply -f k8s/strimzi/kafka/kafka.yaml
 # Minio
 helm upgrade --install minio-operator minio-operator/operator --values k8s/minio/operator.yaml --version 5.0.14 --namespace minio --create-namespace
 helm upgrade --install minio-tenant minio-operator/tenant --values k8s/minio/tenant.yaml --version 5.0.14 --namespace minio --create-namespace
+
+# CloudNative PG
+helm upgrade --install cnpg-operator  cloudnative-pg/cloudnative-pg --values k8s/cloudnative-pg/operator.yaml --version 0.21.0 --namespace cnpg --create-namespace
+helm upgrade --install cnpg-postgresql  cloudnative-pg/cluster --values k8s/cloudnative-pg/postgresql.yaml --version 0.0.8 --namespace cnpg --create-namespace
