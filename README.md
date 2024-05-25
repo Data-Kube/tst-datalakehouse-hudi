@@ -12,6 +12,7 @@ kind delete cluster --name datakube-lakehouse
 kubectl apply -f k8s/nginx/nginx.yaml
 
 # Helm - Repos
+helm repo add traefik https://traefik.github.io/charts
 helm repo add argo https://argoproj.github.io/argo-helm
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo add strimzi https://strimzi.io/charts
@@ -19,6 +20,9 @@ helm repo add kafka-ui https://provectus.github.io/kafka-ui-charts
 helm repo add minio-operator https://operator.min.io
 helm repo add cloudnative-pg https://cloudnative-pg.io/charts/
 helm repo update
+
+# Traefik
+helm upgrade --install traefik traefik/traefik --values k8s/traefik/traefik.yaml --version 28.1.0 --namespace traefik --create-namespace
 
 # ArgoCD
 helm upgrade --install argo-cd argo/argo-cd --values k8s/argo-cd/argo-cd.yaml --version 6.9.3 --namespace argo-cd --create-namespace
