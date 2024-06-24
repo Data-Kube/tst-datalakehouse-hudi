@@ -16,12 +16,12 @@ helm upgrade --install nginx-ingress oci://ghcr.io/nginxinc/charts/nginx-ingress
 # ArgoCD
 helm upgrade --install argo-cd argo/argo-cd --values k8s/argo-cd/argo-cd.yaml --version 6.9.3 --namespace argo-cd --create-namespace
 
-
 # Prometheus
 helm upgrade --install kube-prometheus-stack prometheus-community/kube-prometheus-stack --values k8s/prometheus/operator.yaml --version 57.2.0 --namespace monitoring --create-namespace
 
 # Strimzi
 helm upgrade --install strimzi-operator strimzi/strimzi-kafka-operator --values k8s/strimzi/operator.yaml --version 0.40.0 --namespace strimzi --create-namespace
+kubectl apply -f k8s/strimzi/dashboards
 kubectl apply -f k8s/strimzi/kafka/kafka.yaml
 
 # Kafka UI
