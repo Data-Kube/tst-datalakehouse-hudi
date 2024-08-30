@@ -1,21 +1,23 @@
-# tst-datalakehouse-hudi
+# data_kube-lakehouse-k8s
 
 
 # Helm - Repos
+helm repo add ngrok https://ngrok.github.io/kubernetes-ingress-controller
+helm repo add jetstack https://charts.jetstack.io
 helm repo add argo https://argoproj.github.io/argo-helm
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm repo add strimzi https://strimzi.io/charts
-helm repo add kafka-ui https://provectus.github.io/kafka-ui-charts
-helm repo add minio-operator https://operator.min.io
 helm repo add cloudnative-pg https://cloudnative-pg.io/charts/
+helm repo add strimzi https://strimzi.io/charts
+helm repo add minio-operator https://operator.min.io
+helm repo add kafka-ui https://provectus.github.io/kafka-ui-charts
 helm repo update
 
+# cert-manager
+helm upgrade --install  cert-manager jetstack/cert-manager --values k8s/cert-manager/cert-manager.yaml --version v1.15.3 --namespace cert-manager --create-namespace
+kubectl apply -f k8s/cert-manager/clusterissuer.yaml
+
 # ngrok
-helm repo add ngrok https://ngrok.github.io/kubernetes-ingress-controller
-helm install ngrok-ingress-controller ngrok/kubernetes-ingress-controller \
-   --set credentials.apiKey=$NGROK_API_KEY 
-   --set credentials.authtoken=$NGROK_AUTHTOKEN
-   --set ingressClass.default=true
+helm install ngrok-ingress-controller ngrok/kubernetes-ingress-controller --set credentials.apiKey=$NGROK_API_KEY --set credentials.authtoken=$NGROK_AUTHTOKEN --set ingressClass.default=true
 
 # ArgoCD
 helm upgrade --install argo-cd argo/argo-cd --values k8s/argo-cd/argo-cd.yaml --version 6.9.3 --namespace argo-cd --create-namespace
