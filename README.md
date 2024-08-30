@@ -10,8 +10,12 @@ helm repo add minio-operator https://operator.min.io
 helm repo add cloudnative-pg https://cloudnative-pg.io/charts/
 helm repo update
 
-# NGINX
-helm upgrade --install nginx-ingress oci://ghcr.io/nginxinc/charts/nginx-ingress --values k8s/nginx/nginx.yaml --version 1.2.1 --namespace nginx-ingress --create-namespace
+# ngrok
+helm repo add ngrok https://ngrok.github.io/kubernetes-ingress-controller
+helm install ngrok-ingress-controller ngrok/kubernetes-ingress-controller \
+   --set credentials.apiKey=$NGROK_API_KEY 
+   --set credentials.authtoken=$NGROK_AUTHTOKEN
+   --set ingressClass.default=true
 
 # ArgoCD
 helm upgrade --install argo-cd argo/argo-cd --values k8s/argo-cd/argo-cd.yaml --version 6.9.3 --namespace argo-cd --create-namespace
