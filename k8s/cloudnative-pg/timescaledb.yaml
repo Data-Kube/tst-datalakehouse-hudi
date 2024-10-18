@@ -1,0 +1,19 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: cloudnative-pg-timescaledb
+  namespace: cloudnative-pg
+spec:
+  instances: 1
+  imageName: brenomiranda/data-lakehouse-cloudnative-pg:17.0-timescaledb-2.17.0
+  postgresql:
+    shared_preload_libraries:
+      - timescaledb
+  bootstrap:
+    initdb:
+      postInitTemplateSQL:
+        - CREATE EXTENSION IF NOT EXISTS timescaledb;
+  storage:
+    size: 8Gi
+  walStorage:
+    size: 1Gi
