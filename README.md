@@ -10,6 +10,7 @@ helm repo add cloudnative-pg https://cloudnative-pg.io/charts/
 helm repo add strimzi https://strimzi.io/charts
 helm repo add minio-operator https://operator.min.io
 helm repo add kafka-ui https://provectus.github.io/kafka-ui-charts
+helm repo add runix https://helm.runix.net/
 helm repo update
 
 # cert-manager
@@ -42,6 +43,9 @@ helm upgrade --install minio-operator minio-operator/operator --values k8s/minio
 helm upgrade --install minio-tenant minio-operator/tenant --values k8s/minio/tenant.yaml --version 5.0.14 --namespace minio --create-namespace
 
 # CloudNative PG
-helm upgrade --install cnpg-operator  cloudnative-pg/cloudnative-pg --values k8s/cloudnative-pg/operator.yaml --version 0.21.0 --namespace cnpg --create-namespace
-helm upgrade --install cnpg-postgresql  cloudnative-pg/cluster --values k8s/cloudnative-pg/postgresql.yaml --version 0.0.8 --namespace cnpg --create-namespace
+helm upgrade --install cloudnative-pg-operator cloudnative-pg/cloudnative-pg --values k8s/cloudnative-pg/operator.yaml --version 0.22.1 --namespace cloudnative-pg  --create-namespace
+kubectl apply -f k8s/cloudnative-pg/timescaledb.yaml --namespace cloudnative-pg
 
+
+# pgAdmin4
+helm upgrade --install pgadmin4 runix/pgadmin4 --values k8s/pgadmin/pgadmin.yaml --version 1.31.0 --namespace pgadmin  --create-namespace
