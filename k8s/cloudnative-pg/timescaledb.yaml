@@ -5,7 +5,7 @@ metadata:
   namespace: cloudnative-pg
 spec:
   instances: 1
-  imageName: brenomiranda/data-lakehouse-cloudnative-pg:17.0-timescaledb-2.17.0
+  imageName: brenomiranda/data-lakehouse-cloudnative-pg:16.4-bookworm-timescaledb-2.17.1
   postgresql:
     shared_preload_libraries:
       - timescaledb
