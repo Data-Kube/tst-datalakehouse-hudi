@@ -17,3 +17,5 @@ spec:
     size: 8Gi
   walStorage:
     size: 1Gi
+  monitoring:
+    enablePodMonitor: true
